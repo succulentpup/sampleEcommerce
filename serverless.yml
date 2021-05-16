@@ -68,7 +68,7 @@ functions: # add your functions
       - http:
           method: get
           cors: true
-          path: orders/customer/{customerId}
+          path: customer/{customerId}/orders
     iamRoleStatements:
       - Effect: Allow
         Action:

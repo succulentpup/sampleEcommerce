@@ -29,7 +29,7 @@ _InputValidation_ has been taken care with the help of Middy middleware
 
 3. Get all the orders for a given customer
 <br>$_curl --request GET \
-   --url https://ybcnx0e8x2.execute-api.eu-west-1.amazonaws.com/dev/orders/customer/ganesh_
+   --url https://ybcnx0e8x2.execute-api.eu-west-1.amazonaws.com/dev/customer/ganesh/orders_
 
 **Database Used**:
 <br>
