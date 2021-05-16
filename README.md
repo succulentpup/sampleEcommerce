@@ -43,7 +43,7 @@ If we are too unsure about access patterns or not sure about how to use this dat
 <br>
 Supporting diagrams can be found in supportinDocs folder
 
-**How to run this**:
+**How to run this service**:
 <br>
 It assumes that you've aws account and aws profile is configured in your machine.
 <br>
