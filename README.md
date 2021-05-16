@@ -42,3 +42,17 @@ If we are too unsure about access patterns or not sure about how to use this dat
 **NOTE**:
 <br>
 Supporting diagrams can be found in supportinDocs folder
+
+**How to run this**:
+<br>
+It assumes that you've aws account and aws profile is configured in your machine.
+<br>
+It also assumes nodeJs(at least 10.x) runtime is installed on your machine.
+<br>
+Run the following commands in your terminal.
+
+1. $ npm install -g serverless
+2. clone this repo
+3. Navigate to the repo
+4. $ yarn install
+5. yarn deploy:dev --profile [yourAWSProfileName]
