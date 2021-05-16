@@ -19,10 +19,12 @@ const { TABLE_NAME } = process.env;
 
 export const getProductDetails: APIGatewayProxyHandler = async (event, _context) => {
     Log.debug('Dynamo table name', { TABLE_NAME });
-    const { productId } = event.pathParameters as { productId: string };
+    const { productId: pk } = event.pathParameters as { productId: string };
+    Log.debug('productId: ', { pk });
     const params = {
         Key: {
-            pk: productId,
+            pk,
+            sk: `DETAILS:${pk}`,
         },
         TableName: TABLE_NAME!,
     };
