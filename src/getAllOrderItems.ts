@@ -17,23 +17,22 @@ const dynamoDB = new AWS.DynamoDB.DocumentClient();
 const WHITE_SPACES = 2;
 const { TABLE_NAME } = process.env;
 
-export const query: APIGatewayProxyHandler = async (event, _context) => {
+export const getAllOrderItems: APIGatewayProxyHandler = async (event, _context) => {
     Log.debug('Dynamo table name', { TABLE_NAME });
-    const { pk, sk } = event.queryStringParameters as { pk: string; sk: string };
+    const { orderId } = event.pathParameters as { orderId: string };
     const params = {
         ExpressionAttributeValues: {
-            ':pk': pk,
-            ':sk': sk,
+            ':pk': orderId,
         },
         ExpressionAttributeNames: {
             '#pk': 'pk',
-            '#sk': 'sk',
         },
-        KeyConditionExpression: '#pk = :pk and #sk = :sk',
+        KeyConditionExpression: '#pk = :pk',
         ScanIndexForward: false,
-        Limit: 1,
+        Limit: 10, // fetching only latest 10 for this exercise
         TableName: TABLE_NAME!,
     };
+    // todo: pagination is not handled for this exercise
     const queryResult = await dynamoDB.query(params).promise();
     Log.debug('queryResult: ', { queryResult });
     return ({
@@ -50,19 +49,18 @@ export const query: APIGatewayProxyHandler = async (event, _context) => {
 const inputSchema = {
     type: 'object',
     properties: {
-        queryStringParameters: {
+        pathParameters: {
             type: 'object',
             properties: {
-                pk: { type: 'string', minLength: 1 },
-                sk: { type: 'string', minLength: 1 },
+                orderId: { type: 'string', minLength: 6 }, // todo: regex to ensure orderId starts with ORDER
             },
-            required: ['pk', 'sk'],
+            required: ['orderId'],
             additionalProperties: false,
         },
     },
 };
 
-export const handler = middy(query)
+export const handler = middy(getAllOrderItems)
     .use(httpEventNormalizer()) // Normalizes HTTP events by adding an empty object for queryStringParameters and pathParameters if they are missing.
     .use(httpHeaderNormalizer()) // Normalizes HTTP header names to their canonical format.
     .use(validator({ inputSchema, outputSchema })) // validates the input

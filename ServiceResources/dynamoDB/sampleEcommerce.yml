@@ -1,5 +1,5 @@
 Resources:
-  SampleDynamoTableChangeIt:
+  SampleEcommerce:
     Type: AWS::DynamoDB::Table
     DeletionPolicy: ${self:custom.dynamodb.DeletionPolicy}
     Properties:
@@ -15,16 +15,16 @@ Resources:
         - AttributeName: sk
           KeyType: RANGE
       PointInTimeRecoverySpecification:
-        PointInTimeRecoveryEnabled: ${self:custom.dynamodb.SAMPLEDYNAMOTABLE_CHANGEIT_TABLE_PIT_RECOVERY}
-      SSESpecification: ${self:custom.dynamodb.SAMPLEDYNAMOTABLE_CHANGEIT_TABLE_SSE_SPECIFICATION}
-      TimeToLiveSpecification: ${self:custom.dynamodb.SAMPLEDYNAMOTABLE_CHANGEIT_TABLE_TTL_SPECIFICATION}
+        PointInTimeRecoveryEnabled: ${self:custom.dynamodb.SAMPLEECOMMERCE_TABLE_PIT_RECOVERY}
+      SSESpecification: ${self:custom.dynamodb.SAMPLEECOMMERCE_TABLE_SSE_SPECIFICATION}
+      TimeToLiveSpecification: ${self:custom.dynamodb.SAMPLEECOMMERCE_TABLE_TTL_SPECIFICATION}
       Tags:
         - Key: service
           Value: ${self:custom.package.name}
         - Key: stage
           Value: ${self:provider.stage}
 Outputs:
-  SampleDynamoTableChangeIt:
-    Description: DynamoDB table - SampleDynamoTableChangeIt, change the name as per your need.
+  SampleEcommerce:
+    Description: DynamoDB table - SampleEcommerce, change the name as per your need.
     Value:
-      Ref: SampleDynamoTableChangeIt
+      Ref: SampleEcommerce

@@ -58,116 +58,98 @@ functions: # add your functions
           method: get
           cors: true
           path: health
-  saveCardDetails:
-    handler: src/saveCardDetails.handler
-    name: samplePost
-    description: used as base POST method template
-    events:
-      - http:
-          method: post
-          cors: true
-          path: card
-  fireAndFetchResponseForGivenUrl:
-    handler: src/fireAndFetchResponseForGivenUrl.handler
-    name: fireAndFetchResponseForGivenUrl
-    description: sample end point that fires an url, returns the response of that url
-    events:
-      - http:
-          method: get
-          cors: true
-          path: fetchurl
-  getAllFromDynamoTable:
-    handler: src/getAllFromDynamoTable.handler
-    name: getAllFromDynamoTable
-    description: sample end point that fetches an item from SampleDynamoTableChangeIt
-    iamRoleStatementsName: getAll
+#  getAllFromDynamoTable:
+#    handler: src/getAllFromDynamoTable.handler
+#    name: getAllFromDynamoTable
+#    description: sample end point that fetches an item from SampleEcommerce
+#    iamRoleStatementsName: getAll
+#    environment:
+#      TABLE_NAME:
+#        Ref: SampleEcommerce
+#    events:
+#      - http:
+#          method: get
+#          cors: true
+#          path: getAll
+#    iamRoleStatements:
+#      - Effect: Allow
+#        Action:
+#          - dynamodb:Scan
+#        Resource: '#{SampleEcommerce.Arn}'
+  getAllOrderItems:
+    handler: src/getAllOrderItems.handler
+    name: getAllOrderItems
+    iamRoleStatementsName: getAllOrderItems
+    description: Get all orderItems (products) for a given order
     environment:
       TABLE_NAME:
-        Ref: SampleDynamoTableChangeIt
+        Ref: SampleEcommerce
     events:
       - http:
           method: get
           cors: true
-          path: getAll
-    iamRoleStatements:
-      - Effect: Allow
-        Action:
-          - dynamodb:Scan
-        Resource: '#{SampleDynamoTableChangeIt.Arn}'
-  queryItemsFromDynamoTable:
-    handler: src/queryItemsFromDynamoTable.handler
-    name: queryItemsFromDynamoTable
-    iamRoleStatementsName: queryItems
-    description: sample end point queries a few items from SampleDynamoTableChangeIt
-    environment:
-      TABLE_NAME:
-        Ref: SampleDynamoTableChangeIt
-    events:
-      - http:
-          method: get
-          cors: true
-          path: query
+          path: order/{orderId}/products
     iamRoleStatements:
       - Effect: Allow
         Action:
           - dynamodb:Query
-        Resource: '#{SampleDynamoTableChangeIt.Arn}'
-  createItemInDynamoTable:
-    handler: src/createItemInDynamoTable.handler
-    name: createItemInDynamoTable
-    iamRoleStatementsName: createItem
-    description: sample end point that creates an item into SampleDynamoTableChangeIt
-    environment:
-      TABLE_NAME:
-        Ref: SampleDynamoTableChangeIt
-    events:
-      - http:
-          method: post
-          cors: true
-          path: create
-    iamRoleStatements:
-      - Effect: Allow
-        Action:
-          - dynamodb:PutItem
-        Resource: '#{SampleDynamoTableChangeIt.Arn}'
-  updateItemInDynamoTable:
-    handler: src/updateItemInDynamoTable.handler
-    name: updateItemInDynamoTable
-    iamRoleStatementsName: updateItem
-    description: sample end point that updates an item into SampleDynamoTableChangeIt
-    environment:
-      TABLE_NAME:
-        Ref: SampleDynamoTableChangeIt
-    events:
-      - http:
-          method: put
-          cors: true
-          path: update
-    iamRoleStatements:
-      - Effect: Allow
-        Action:
-          - dynamodb:UpdateItem
-        Resource: '#{SampleDynamoTableChangeIt.Arn}'
-  deleteItemInDynamoTable:
-    handler: src/deleteItemInDynamoTable.handler
-    name: deleteItemInDynamoTable
-    iamRoleStatementsName: deleteItem
-    description: sample end point that deletes an item from SampleDynamoTableChangeIt
-    environment:
-      TABLE_NAME:
-        Ref: SampleDynamoTableChangeIt
-    events:
-      - http:
-          method: delete
-          cors: true
-          path: delete
-    iamRoleStatements:
-      - Effect: Allow
-        Action:
-          - dynamodb:DeleteItem
-        Resource: '#{SampleDynamoTableChangeIt.Arn}'
+        Resource: '#{SampleEcommerce.Arn}'
+#  createItemInDynamoTable:
+#    handler: src/createItemInDynamoTable.handler
+#    name: createItemInDynamoTable
+#    iamRoleStatementsName: createItem
+#    description: sample end point that creates an item into SampleEcommerce
+#    environment:
+#      TABLE_NAME:
+#        Ref: SampleEcommerce
+#    events:
+#      - http:
+#          method: post
+#          cors: true
+#          path: create
+#    iamRoleStatements:
+#      - Effect: Allow
+#        Action:
+#          - dynamodb:PutItem
+#        Resource: '#{SampleEcommerce.Arn}'
+#  updateItemInDynamoTable:
+#    handler: src/updateItemInDynamoTable.handler
+#    name: updateItemInDynamoTable
+#    iamRoleStatementsName: updateItem
+#    description: sample end point that updates an item into SampleEcommerce
+#    environment:
+#      TABLE_NAME:
+#        Ref: SampleEcommerce
+#    events:
+#      - http:
+#          method: put
+#          cors: true
+#          path: update
+#    iamRoleStatements:
+#      - Effect: Allow
+#        Action:
+#          - dynamodb:UpdateItem
+#        Resource: '#{SampleEcommerce.Arn}'
+#  deleteItemInDynamoTable:
+#    handler: src/deleteItemInDynamoTable.handler
+#    name: deleteItemInDynamoTable
+#    iamRoleStatementsName: deleteItem
+#    description: sample end point that deletes an item from SampleEcommerce
+#    environment:
+#      TABLE_NAME:
+#        Ref: SampleEcommerce
+#    events:
+#      - http:
+#          method: delete
+#          cors: true
+#          path: delete
+#    iamRoleStatements:
+#      - Effect: Allow
+#        Action:
+#          - dynamodb:DeleteItem
+#        Resource: '#{SampleEcommerce.Arn}'
 resources:
   # DynamoDB Tables
-  - ${file(ServiceResources/dynamoDB/sampleDynamoTableChangeIt.yml)}
+  - ${file(ServiceResources/dynamoDB/sampleEcommerce.yml)}
   # Output
   - ${file(ServiceResources/outputs.yml)}
