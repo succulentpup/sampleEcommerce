@@ -13,6 +13,8 @@ Endpoints are implemented using lambdas. Unless we know any UX issues, the defau
 _Authentication_ can be implemented using Cognito
 <br>
 _Authorization_ can be implemented using customAuthorizer lambda.
+<br>
+_InputValidation_ has been taken care with the help of Middy middleware
 
 **Sample CURL requests**:
 
@@ -32,7 +34,9 @@ _Authorization_ can be implemented using customAuthorizer lambda.
 **Database Used**:
 <br>
 DynamoDB is used as backend DB.
-DynamoDB is being used by a giant ecommerce app amazon. 
+If we can understand the problem statement really well (access patterns), we can model the data by pre-joining certain attributes.
+So that we can achieve great query performance, mostly it is O(1).
+DynamoDB is being used by a giant ecommerce app amazon.
 It's already time & stress tested, and many modeling case studies available. 
 
 For this exercise, a single Table strategy worked. 
