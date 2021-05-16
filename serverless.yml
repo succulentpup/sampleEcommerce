@@ -94,6 +94,24 @@ functions: # add your functions
         Action:
           - dynamodb:Query
         Resource: '#{SampleEcommerce.Arn}'
+  getAllOrdersOfCustomer:
+    handler: src/getAllOrdersOfCustomer.handler
+    name: getAllOrdersOfCustomer
+    iamRoleStatementsName: getAllOrdersOfCustomer
+    description: Get all the orders for a given customer
+    environment:
+      TABLE_NAME:
+        Ref: SampleEcommerce
+    events:
+      - http:
+          method: get
+          cors: true
+          path: orders/customer/{customerId}
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+        Resource: '#{SampleEcommerce.Arn}'
 #  createItemInDynamoTable:
 #    handler: src/createItemInDynamoTable.handler
 #    name: createItemInDynamoTable
