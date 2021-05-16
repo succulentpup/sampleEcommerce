@@ -38,7 +38,7 @@ export const getAllOrderItems: APIGatewayProxyHandler = async (event, _context) 
     return ({
         statusCode: status('OK') as number,
         body: JSON.stringify({
-            message: JSON.stringify(queryResult.Items),
+            message: queryResult.Items,
         }, null, WHITE_SPACES),
     });
 };
