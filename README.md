@@ -12,9 +12,9 @@ Endpoints are implemented using lambdas. Unless we know any UX issues, the defau
 <br>
 _Authentication_ can be implemented using Cognito
 <br>
-_Authorization_ can be implemented using customAuthorizer lambdas.
+_Authorization_ can be implemented using customAuthorizer lambda.
 
-Sample CURL requests:
+**Sample CURL requests**:
 
 1. Get the price and name for a given product
 <br>
@@ -32,3 +32,16 @@ _curl --request GET \
 _curl --request GET \
    --url https://ybcnx0e8x2.execute-api.eu-west-1.amazonaws.com/dev/orders/customer/ganesh_
 
+**Database Used**:
+<br>
+DynamoDB is used as backend DB.
+DynamoDB is being used by a giant ecommerce app amazon. 
+It's already time & stress tested, and many modeling case studies available. 
+
+For this exercise, a single Table strategy worked. 
+<br>
+If we are too unsure about access patterns or not sure about how to use this data for analytics then we can rethink.
+
+**NOTE**:
+<br>
+Supporting diagrams can be found in supportinDocs folder
