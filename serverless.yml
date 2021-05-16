@@ -4,8 +4,6 @@ service: sample-ecommerce-service
 plugins:
   - serverless-webpack
   - serverless-pseudo-parameters
-#  - serverless-certificate-creator
-#  - serverless-domain-manager
   - serverless-iam-roles-per-function
 provider:
   name: aws
@@ -23,24 +21,6 @@ custom:
   domain: ${self:custom.host}
   dynamodb: ${file(./env/dynamodb.env.yml):${self:provider.stage}}
   package: ${file(./package.json)}
-#  customCertificate:
-#    certificateName: ${self:custom.domain}
-#    hostedZoneName: '${self:custom.host}.'
-#    region: ${self:provider.region}
-#    tags:
-#      Name: ${self:custom.domain}
-#      Environment: ${self:provider.stage}
-#  customDomain:
-#    domainName: ${self:custom.domain}
-#    certificateName: ${self:custom.domain}
-#    stage: ${self:provider.stage}
-#    basePath: api
-#    createRoute53Record: true
-#    endpointType: 'regional'
-#    securityPolicy: tls_1_2
-#    apiType: http
-#    autoDomain: false
-
 
   webpack:
     packager: npm
@@ -58,24 +38,6 @@ functions: # add your functions
           method: get
           cors: true
           path: health
-#  getAllFromDynamoTable:
-#    handler: src/getAllFromDynamoTable.handler
-#    name: getAllFromDynamoTable
-#    description: sample end point that fetches an item from SampleEcommerce
-#    iamRoleStatementsName: getAll
-#    environment:
-#      TABLE_NAME:
-#        Ref: SampleEcommerce
-#    events:
-#      - http:
-#          method: get
-#          cors: true
-#          path: getAll
-#    iamRoleStatements:
-#      - Effect: Allow
-#        Action:
-#          - dynamodb:Scan
-#        Resource: '#{SampleEcommerce.Arn}'
   getAllOrderItems:
     handler: src/getAllOrderItems.handler
     name: getAllOrderItems
@@ -112,60 +74,24 @@ functions: # add your functions
         Action:
           - dynamodb:Query
         Resource: '#{SampleEcommerce.Arn}'
-#  createItemInDynamoTable:
-#    handler: src/createItemInDynamoTable.handler
-#    name: createItemInDynamoTable
-#    iamRoleStatementsName: createItem
-#    description: sample end point that creates an item into SampleEcommerce
-#    environment:
-#      TABLE_NAME:
-#        Ref: SampleEcommerce
-#    events:
-#      - http:
-#          method: post
-#          cors: true
-#          path: create
-#    iamRoleStatements:
-#      - Effect: Allow
-#        Action:
-#          - dynamodb:PutItem
-#        Resource: '#{SampleEcommerce.Arn}'
-#  updateItemInDynamoTable:
-#    handler: src/updateItemInDynamoTable.handler
-#    name: updateItemInDynamoTable
-#    iamRoleStatementsName: updateItem
-#    description: sample end point that updates an item into SampleEcommerce
-#    environment:
-#      TABLE_NAME:
-#        Ref: SampleEcommerce
-#    events:
-#      - http:
-#          method: put
-#          cors: true
-#          path: update
-#    iamRoleStatements:
-#      - Effect: Allow
-#        Action:
-#          - dynamodb:UpdateItem
-#        Resource: '#{SampleEcommerce.Arn}'
-#  deleteItemInDynamoTable:
-#    handler: src/deleteItemInDynamoTable.handler
-#    name: deleteItemInDynamoTable
-#    iamRoleStatementsName: deleteItem
-#    description: sample end point that deletes an item from SampleEcommerce
-#    environment:
-#      TABLE_NAME:
-#        Ref: SampleEcommerce
-#    events:
-#      - http:
-#          method: delete
-#          cors: true
-#          path: delete
-#    iamRoleStatements:
-#      - Effect: Allow
-#        Action:
-#          - dynamodb:DeleteItem
-#        Resource: '#{SampleEcommerce.Arn}'
+  getProductDetails:
+    handler: src/getProductDetails.handler
+    name: getProductDetails
+    iamRoleStatementsName: getProductDetails
+    description: Get the price and name for a given product
+    environment:
+      TABLE_NAME:
+        Ref: SampleEcommerce
+    events:
+      - http:
+          method: get
+          cors: true
+          path: product/{productId}
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:GetItem
+        Resource: '#{SampleEcommerce.Arn}'
 resources:
   # DynamoDB Tables
   - ${file(ServiceResources/dynamoDB/sampleEcommerce.yml)}
