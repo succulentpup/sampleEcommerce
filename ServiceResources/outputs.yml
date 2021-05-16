@@ -1,0 +1,7 @@
+Outputs:
+  ApiGatewayRestApi:
+    Description: Api Gateway Id for the service.
+    Value:
+      Ref: ApiGatewayRestApi
+    Export:
+      Name: '#{AWS::StackName}-ApiGatewayRestApi'

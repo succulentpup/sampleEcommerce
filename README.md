@@ -1,2 +1,2 @@
 # sampleEcommerce
-CRUD APIs for a rudimentary eCommerce micro serivce
+CRUD APIs for a rudimentary eCommerce micro-service

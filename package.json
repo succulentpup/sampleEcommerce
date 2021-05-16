@@ -1,0 +1,74 @@
+{
+  "name": "sample-ecommerce-service",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CRUD APIs for a rudimentary eCommerce micro service",
+  "author": "Ganesh Adapa",
+  "license": "MIT",
+  "main": "handler.js",
+  "scripts": {
+    "cm": "git-cz",
+    "check:updates": "npx npm-check-updates -u",
+    "lint": "tslint -p tsconfig.json -c tslint.json",
+    "typescriptSyntaxCheck": "tsc -p tsconfig.json --outDIR temp --noEmit",
+    "lintAndSyntaxCheck": "yarn lint && yarn typescriptSyntaxCheck",
+    "serverless": "serverless",
+    "sls": "sls",
+    "deploy:dev": "sls deploy --stage dev",
+    "deploy:function": "sls deploy -f",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:unit": "jest --config ./jestConfig/unit/config.js",
+    "test:endpoint-auth": "jest --config ./jestConfig/endpoint-auth/config.js",
+    "test": "yarn test:unit && yarn test:endpoint-auth",
+    "create_domain": "sls create_domain",
+    "delete_domain": "sls delete_domain --stage dev"
+  },
+  "dependencies": {
+    "@dazn/lambda-powertools-logger": "^1.28.1",
+    "@types/statuses": "^2.0.0",
+    "got": "^11.8.2",
+    "middy": "^0.36.0",
+    "statuses": "^2.0.1"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^12.1.1",
+    "@commitlint/config-conventional": "^12.1.1",
+    "@types/aws-lambda": "^8.10.75",
+    "@types/jest": "^26.0.22",
+    "@types/node": "^14.14.37",
+    "git-cz": "^4.7.6",
+    "husky": "^6.0.0",
+    "jest": "^26.6.3",
+    "jest-environment-node": "^26.6.2",
+    "serverless": "~2.35.0",
+    "serverless-certificate-creator": "^1.5.3",
+    "serverless-domain-manager": "^5.1.0",
+    "serverless-iam-roles-per-function": "^3.1.0",
+    "serverless-pseudo-parameters": "^2.5.0",
+    "serverless-webpack": "^5.4.1",
+    "source-map-support": "^0.5.19",
+    "terser-webpack-plugin": "^5.1.1",
+    "thread-loader": "^3.0.1",
+    "ts-jest": "^26.5.4",
+    "ts-loader": "^8.1.0",
+    "tslint": "^5.20.1",
+    "typescript": "^4.2.4",
+    "webpack": "^5.31.2"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "yarn lintAndSyntaxCheck",
+      "pre-push": "yarn test"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "git-cz"
+    }
+  }
+}
